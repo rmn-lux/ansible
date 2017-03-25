@@ -4,9 +4,9 @@
 #
 - hosts: elk
   roles:
-   - { role: java }
-   - { role: elasticsearch }
-   - { role: kibana }
-   - { role: syslog-ng }
-   - { role: logstash }
+   - java 
+   - elasticsearch
+   - kibana
+   - syslog-ng
+   - logstash 
 
