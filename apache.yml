@@ -1,10 +1,10 @@
 
 - hosts: elk
   tasks:
-    - name: Installs apache web server
+    - name: Install apache web server
       apt: pkg=apache2 state=installed update_cache=true
 
-    - name: Push default virtual host configuration
+    - name: Push default virtual host config
       copy: src=files/awesome-app dest=/etc/apache2/sites-available/ mode=0640
 
 #   - name: Deactivates the default virtualhost
