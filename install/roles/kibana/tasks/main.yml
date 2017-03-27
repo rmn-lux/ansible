@@ -6,41 +6,45 @@
   apt_repository:
     repo: deb https://artifacts.elastic.co/packages/5.x/apt stable main
     state: present
+
 # Install Kibana
 - name: Update repositories cache and install Kibana
   apt:
     name: kibana
     update_cache: yes
+
 # Update Kibana`s config to output listen
 - name: Updating config to output listen
   lineinfile:
     destfile: /etc/kibana/kibana.yml
-    regexp: '^#server.port: 5601'
-    insertafter: '^#server.port: 5601'
+    regexp: '^server.port'
+    insertafter: '^#server.port'
     line: 'server.port: {{ kibana_port  }}'
-    state: present
+
+
 # Update Kibana`s config to change server host
 - name: Updating server host
   lineinfile:
     destfile: /etc/kibana/kibana.yml
-    regexp: '^#server.host'
+    regexp: '^server.host'
     insertafter: '^#server.host'
     line: 'server.host: {{ kibana_host  }}'
-    state: present
+
 # Update Kibana`s config to change URL of ES
-- name: Updating ES URL
+- name: Updating Kibana`s URL of ES
   lineinfile:
     destfile: /etc/kibana/kibana.yml
-    regexp: '^#elasticsearch.url' 
+    regexp: '^elasticsearch.url'
     insertafter: '^#elasticsearch.url'
-    line: 'elasticsearch.url: {{ es_host  }}{{ es_http_port  }}'
-    state: present 
+    line: 'elasticsearch.url: http://{{ es_host }}:{{ es_http_port }}'
+
 # Enable Kibana service
 - name: Enabling Kibana service
   systemd:
     name: kibana
     enabled: yes
     daemon_reload: yes
+
 # Start Kibana service
 - name: Starting Kibana service
   systemd:

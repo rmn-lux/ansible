@@ -7,21 +7,24 @@
   apt_key:
     url: "https://packages.elastic.co/GPG-KEY-elasticsearch"
     state: present
+
 # Add the Elasticsearch APT-repository
 - name: Adding Elasticsearch APT repository
   apt_repository:
     repo: deb https://artifacts.elastic.co/packages/5.x/apt stable main
     state: present
+
 # Install Elasticsearch
 - name: Update repositories cache and install Elasticsearch
   apt:
     name: elasticsearch
     update_cache: yes
+
 # Update Elasticsearch config file to only allow localhost connections
 - name: Updating the config file to restrict outside access
   lineinfile:
     destfile: /etc/elasticsearch/elasticsearch.yml
-    regexp: '^#network.host'
+    regexp: '^network.host'
     insertafter: '^#network.host'
     line: 'network.host: {{ es_host  }}'
 
@@ -29,7 +32,7 @@
 - name: Updating the config file to change http port
   lineinfile:
     destfile: /etc/elasticsearch/elasticsearch.yml
-    regexp: '^#http.port'
+    regexp: '^http.port'
     insertafter: '^#http.port'
     line: 'http.port: {{ es_http_port  }}'
 
@@ -37,18 +40,34 @@
 - name : Updating the config file to change cluster name
   lineinfile:
     destfile: /etc/elasticsearch/elasticsearch.yml
-    regexp: '^#cluster.name'
+    regexp: '^cluster.name'
     insertafter: '^#cluster.name'
     line: 'cluster.name: {{ es_cluster_name  }}'
+
 # Update ES config file to change node name
 - name : Updating the config file to change node name
   lineinfile:
     destfile: /etc/elasticsearch/elasticsearch.yml
-    regexp: '^#node.name'
+    regexp: '^node.name'
     insertafter: '^#node.name'
     line: 'node.name: {{ es_node_name  }}'
-# Restart Elasticsearch
-- name: Restarting Elasticsearch
-  service:
+
+# Enable ES 
+- name: Enabling ES service
+  systemd:
     name: elasticsearch
-    state: restarted
+    enabled: yes
+    daemon_reload: yes
+
+# Start ES service
+- name: Starting ES service
+  systemd:
+    name: elasticsearch
+    state: started
+
+
+# Restart Elasticsearch
+#- name: Restarting Elasticsearch
+#  service:
+#    name: elasticsearch
+#    state: restarted
