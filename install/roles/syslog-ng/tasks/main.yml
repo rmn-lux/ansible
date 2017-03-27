@@ -1,0 +1,19 @@
+---
+# Installing syslog-ng
+#
+# Install syslog-ng
+- name: Update repositories cache and install syslog-ng
+  apt:
+    name: syslog-ng
+    update_cache: yes
+# Enable syslog-ng service
+- name: Enabling syslog-ng service
+  systemd:
+    name: syslog-ng
+    enabled: yes
+    daemon_reload: yes
+# Start syslog-ng service
+- name: Starting syslog-ng service
+  systemd:
+    name: syslog-ng
+    state: started

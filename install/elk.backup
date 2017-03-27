@@ -1,0 +1,13 @@
+---
+#
+# Playbook to install the ELK stack
+#
+ - hosts: elk
+   stategy: debug
+   roles:
+    - java 
+    - elasticsearch
+    - kibana
+    - syslog-ng
+    - logstash 
+
