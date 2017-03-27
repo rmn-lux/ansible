@@ -2,8 +2,16 @@
 # Hostname of the server that is going to run the ELK stack
 server_name: ubuntu-work
 #
+# ES variables
+es_host: localhost
+es_cluster_name: syslog
+es_node_name: node-1
+#es_path_logs: /etc/elasticsearch/logs
+#es_path_data: /etc/elasticsearch/data
+es_http_port: 9200
 # -- Kibana variables --
-#
+kibana_port: 5601
+kibana_host: localhost
 # -- Syslog-ng variables --
 #
 # -- Logstash variables --

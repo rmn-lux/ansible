@@ -21,8 +21,32 @@
 - name: Updating the config file to restrict outside access
   lineinfile:
     destfile: /etc/elasticsearch/elasticsearch.yml
-    regexp: 'network.host:'
-    line: 'network.host: localhost'
+    regexp: '^#network.host'
+    insertafter: '^#network.host'
+    line: 'network.host: {{ es_host  }}'
+
+# Update Elasticsearch config file to change http port
+- name: Updating the config file to change http port
+  lineinfile:
+    destfile: /etc/elasticsearch/elasticsearch.yml
+    regexp: '^#http.port'
+    insertafter: '^#http.port'
+    line: 'http.port: {{ es_http_port  }}'
+
+# Update ES config file to change cluster name
+- name : Updating the config file to change cluster name
+  lineinfile:
+    destfile: /etc/elasticsearch/elasticsearch.yml
+    regexp: '^#cluster.name'
+    insertafter: '^#cluster.name'
+    line: 'cluster.name: {{ es_cluster_name  }}'
+# Update ES config file to change node name
+- name : Updating the config file to change node name
+  lineinfile:
+    destfile: /etc/elasticsearch/elasticsearch.yml
+    regexp: '^#node.name'
+    insertafter: '^#node.name'
+    line: 'node.name: {{ es_node_name  }}'
 # Restart Elasticsearch
 - name: Restarting Elasticsearch
   service:

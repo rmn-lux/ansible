@@ -11,6 +11,30 @@
   apt:
     name: kibana
     update_cache: yes
+# Update Kibana`s config to output listen
+- name: Updating config to output listen
+  lineinfile:
+    destfile: /etc/kibana/kibana.yml
+    regexp: '^#server.port: 5601'
+    insertafter: '^#server.port: 5601'
+    line: 'server.port: {{ kibana_port  }}'
+    state: present
+# Update Kibana`s config to change server host
+- name: Updating server host
+  lineinfile:
+    destfile: /etc/kibana/kibana.yml
+    regexp: '^#server.host'
+    insertafter: '^#server.host'
+    line: 'server.host: {{ kibana_host  }}'
+    state: present
+# Update Kibana`s config to change URL of ES
+- name: Updating ES URL
+  lineinfile:
+    destfile: /etc/kibana/kibana.yml
+    regexp: '^#elasticsearch.url' 
+    insertafter: '^#elasticsearch.url'
+    line: 'elasticsearch.url: {{ es_host  }}{{ es_http_port  }}'
+    state: present 
 # Enable Kibana service
 - name: Enabling Kibana service
   systemd:
