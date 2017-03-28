@@ -2,7 +2,7 @@
 - hosts: elk
   roles: 
 #    - java
-    - elasticsearch
+#    - elasticsearch
 #    - kibana
 #    - syslog-ng
-#    - logstash
+    - logstash

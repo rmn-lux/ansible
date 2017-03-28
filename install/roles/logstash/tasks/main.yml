@@ -1,46 +1,36 @@
 ---
 # Installing logstash
 #
+
 # Add Logstash APT repository
 - name: Adding logstash APT repository
   apt_repository:
     repo: deb https://artifacts.elastic.co/packages/5.x/apt stable main
     state: present
+
 # Installing Logstash
 - name: Update repositories cache and install Logstash
   apt:
     name: logstash
     update_cache: yes
-# Configure input configuration 01-input.conf
-- name: Configure input configuration file
+
+# Configure  configuration
+- name: Configure configuration file
   template:
-    src=01-input.conf.j2
-    dest=/etc/logstash/conf.d/01-input.conf
+    src=simple.conf.j2
+    dest=/etc/logstash/conf.d/simple.conf
     owner=root
     group=root
     mode=0644
-# Configure Logstash filter.conf config file
-- name: Configure Syslog Filter
-  template:
-    src=02-filter.conf.j2
-    dest=/etc/logstash/conf.d/02-filter.conf
-    owner=root
-    group=root
-    mode=0644
-# Configure Elasticsearch output file 03-output.conf
-- name: Configure Elasticsearch output file
-  template:
-    src=03-output.conf.j2
-    dest=/etc/logstash/conf.d/03-output.conf
-    owner=root
-    group=root
-    mode=0644
+  notify: restart logstash
+
 # Start Logstash service
 - name: Start Logstash service
   systemd:
     name: logstash
     state: started
     daemon_reload: yes
+
 # Enable Logstash service
 - name: Enable Logstash service
   systemd:

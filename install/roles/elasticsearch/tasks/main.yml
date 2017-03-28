@@ -27,7 +27,8 @@
     regexp: '^network.host'
     insertafter: '^#network.host'
     line: 'network.host: {{ es_host  }}'
-
+  notify: restart es
+  
 # Update Elasticsearch config file to change http port
 - name: Updating the config file to change http port
   lineinfile:
@@ -35,6 +36,7 @@
     regexp: '^http.port'
     insertafter: '^#http.port'
     line: 'http.port: {{ es_http_port  }}'
+  notify: restart es
 
 # Update ES config file to change cluster name
 - name : Updating the config file to change cluster name
@@ -43,6 +45,7 @@
     regexp: '^cluster.name'
     insertafter: '^#cluster.name'
     line: 'cluster.name: {{ es_cluster_name  }}'
+  notify: restart es
 
 # Update ES config file to change node name
 - name : Updating the config file to change node name
@@ -51,8 +54,9 @@
     regexp: '^node.name'
     insertafter: '^#node.name'
     line: 'node.name: {{ es_node_name  }}'
+  notify: restart es
 
-# Enable ES 
+# Enable ES service
 - name: Enabling ES service
   systemd:
     name: elasticsearch
@@ -65,9 +69,9 @@
     name: elasticsearch
     state: started
 
-
-# Restart Elasticsearch
-#- name: Restarting Elasticsearch
+# Restarting ES service
+#- name: Restarting ES service
 #  service:
 #    name: elasticsearch
 #    state: restarted
+#  when: changed|true

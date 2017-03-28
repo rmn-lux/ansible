@@ -20,7 +20,7 @@
     regexp: '^server.port'
     insertafter: '^#server.port'
     line: 'server.port: {{ kibana_port  }}'
-
+  notify: restart kibana
 
 # Update Kibana`s config to change server host
 - name: Updating server host
@@ -29,7 +29,7 @@
     regexp: '^server.host'
     insertafter: '^#server.host'
     line: 'server.host: {{ kibana_host  }}'
-
+  notify: restart kibana
 # Update Kibana`s config to change URL of ES
 - name: Updating Kibana`s URL of ES
   lineinfile:
@@ -37,6 +37,7 @@
     regexp: '^elasticsearch.url'
     insertafter: '^#elasticsearch.url'
     line: 'elasticsearch.url: http://{{ es_host }}:{{ es_http_port }}'
+  notify: restart kibana
 
 # Enable Kibana service
 - name: Enabling Kibana service
