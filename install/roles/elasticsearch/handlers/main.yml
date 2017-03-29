@@ -1,6 +1,6 @@
 ---
 
-# Restarting ES after config`s cnahges
+# Restarting ES after config`s cnahge
 
 - name: restart es
   service:
