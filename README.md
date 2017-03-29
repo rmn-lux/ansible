@@ -1,4 +1,4 @@
-# Installing Elasticsearch, Logstash, Kibana (ELK) + syslog-ng 
+# Installing Elasticsearch, Logstash, Kibana (ELK) + syslog-ng (for debian based systems)
 
 There are a few roles:
 * Java - add repo and install
