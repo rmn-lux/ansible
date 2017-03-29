@@ -3,51 +3,23 @@
 #
 # Add Kibana APT-repository
 - name: Adding Kibana APT repository
-  apt_repository:
-    repo: deb https://artifacts.elastic.co/packages/5.x/apt stable main
+  apt_repository: 
+    repo: deb https://artifacts.elastic.co/packages/5.x/apt stable main 
     state: present
 
 # Install Kibana
 - name: Update repositories cache and install Kibana
-  apt:
-    name: kibana
-    update_cache: yes
+  apt: name=kibana update_cache=yes
 
-# Update Kibana`s config to output listen
-- name: Updating config to output listen
-  lineinfile:
-    destfile: /etc/kibana/kibana.yml
-    regexp: '^server.port'
-    insertafter: '^#server.port'
-    line: 'server.port: {{ kibana_port  }}'
-  notify: restart kibana
-
-# Update Kibana`s config to change server host
-- name: Updating server host
-  lineinfile:
-    destfile: /etc/kibana/kibana.yml
-    regexp: '^server.host'
-    insertafter: '^#server.host'
-    line: 'server.host: {{ kibana_host  }}'
-  notify: restart kibana
-# Update Kibana`s config to change URL of ES
-- name: Updating Kibana`s URL of ES
-  lineinfile:
-    destfile: /etc/kibana/kibana.yml
-    regexp: '^elasticsearch.url'
-    insertafter: '^#elasticsearch.url'
-    line: 'elasticsearch.url: http://{{ es_host }}:{{ es_http_port }}'
+# Load Kibana config file
+- name: Loading config file from template
+  template: src=kibana.yml.j2 dest=/etc/kibana/kibana.yml owner=kibana group=kibana mode=0755
   notify: restart kibana
 
 # Enable Kibana service
 - name: Enabling Kibana service
-  systemd:
-    name: kibana
-    enabled: yes
-    daemon_reload: yes
+  systemd: name=kibana enabled=yes daemon_reload=yes
 
 # Start Kibana service
 - name: Starting Kibana service
-  systemd:
-    name: kibana
-    state: started
+  systemd: name=kibana state=started

@@ -2,8 +2,7 @@
 ---
 # Add repo
 - name: add Java repository
-  apt_repository:
-    repo: 'ppa:webupd8team/java'
+  apt_repository: repo='ppa:webupd8team/java'
 
  # Automatically accepts the Oracle License popup in the terminal
 - name: Automatically select the Oracle License
@@ -11,7 +10,4 @@
 
 # Install Java 8
 - name: Install the Java 8 package
-  apt:
-    name: oracle-java8-installer
-    state: present
-    update_cache: yes
+  apt: name=oracle-java8-installer state=present update_cache=yes

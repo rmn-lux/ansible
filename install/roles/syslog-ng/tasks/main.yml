@@ -13,40 +13,21 @@
 
 #  Create directory for logs - /var/log/syslog-ng
 - name: Creating directory for logs
-  file:
-    dest: /var/log/syslog-ng
-    state: directory
-    mode: 0755
+  file: dest=/var/log/syslog-ng state=directory mode=0755
 
 # Create file for logs
 - name: Creating log file in /var/log/syslog-ng - syslog-ng.log
-  copy:
-    content: ""
-    dest: /var/log/syslog-ng/syslog-ng.log
-    force: no
-    owner: root
-    group: root
-    mode: 0755
+  copy: content="" dest=/var/log/syslog-ng/syslog-ng.log force=no owner=root group=root mode=0755
    
 # Load syslog-ng config file
 - name: Loading config file from template
-  template:
-    src: syslog-ng.conf.j2
-    dest: /etc/syslog-ng/syslog-ng.conf
-    owner: root
-    group: root
-    mode: 0755
+  template: src=syslog-ng.conf.j2 dest=/etc/syslog-ng/syslog-ng.conf owner=root group=root mode=0755
   notify: restart syslog-ng
  
 # Enable syslog-ng service
 - name: Enabling syslog-ng service
-  systemd:
-    name: syslog-ng
-    enabled: yes
-    daemon_reload: yes
+  systemd: name=syslog-ng enabled=yes daemon_reload=yes
 
 # Start syslog-ng service
 - name: Starting syslog-ng service
-  systemd:
-    name: syslog-ng
-    state: started
+  systemd: name=syslog-ng state=started
