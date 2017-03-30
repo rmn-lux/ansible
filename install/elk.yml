@@ -1,7 +1,7 @@
 ---
 - name: Install ELK, Java and syslog-ng
   hosts: elk
-  remote_user: rmn
+  remote_user: elk
   become: yes
   become_method: sudo
   roles: 

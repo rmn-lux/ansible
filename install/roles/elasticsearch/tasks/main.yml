@@ -25,6 +25,6 @@
 - name: Enabling ES service
   systemd: name=elasticsearch enabled=yes daemon_reload=yes
 
-# Start ES service
+#### Start ES service
 - name: Starting ES service
   systemd: name=elasticsearch state=started
