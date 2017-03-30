@@ -11,3 +11,4 @@
     - { role: syslog-ng, tags: syslog-ng }
     - { role: logstash, tags: logstash }
     - { role: curator, tags: curator }
+    - { role: logrotate, tags: logrotate }	
