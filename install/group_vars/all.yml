@@ -1,15 +1,4 @@
 ---
-# ES variables
+# ES variables for Kibana`s template
 es_host: localhost
-es_cluster_name: syslog
-es_node_name: node-1
 es_http_port: 9200
-
-# -- Kibana variables --
-kibana_port: 5601
-kibana_host: localhost
-
-# -- Syslog-ng variables --
-syslog_dest_host: localhost
-
-# -- Logstash variables --
