@@ -1,12 +1,13 @@
 ---
 - name: Install ELK, Java and syslog-ng
   hosts: elk
-  #remote_user: rmn
+  remote_user: rmn
   become: yes
   become_method: sudo
   roles: 
-    - java
-    - elasticsearch
-    - kibana
-    - syslog-ng
-    - logstash
+    - { role: java, tags: java }
+    - { role: elasticsearch, tags: es }
+    - { role: kibana, tags: kibana }
+    - { role: syslog-ng, tags: syslog-ng }
+    - { role: logstash, tags: logstash }
+    - { role: curator, tags: curator }
